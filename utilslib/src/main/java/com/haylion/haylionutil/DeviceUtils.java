@@ -40,7 +40,7 @@ public class DeviceUtils {
 
     private static void initManager(Context context) {
         if (wifiMgr == null) {
-            Object obj = context.getSystemService(Context.WIFI_SERVICE);
+            Object obj = context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if (obj != null) {
                 wifiMgr = (WifiManager) obj;
             }
@@ -59,11 +59,18 @@ public class DeviceUtils {
      * @param context
      * @return
      */
+    @SuppressLint("HardwareIds")
     public static String getDeviceId(Context context) {
         try {
             initManager(context);
             if (telMgr != null) {//IMEI
-                String imei = telMgr.getDeviceId();
+
+                String imei = null;
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                    imei = telMgr.getImei();
+                } else {
+                    imei = telMgr.getDeviceId();
+                }
                 if (!isEmpty(imei)) {
                     return imei;
                 }
@@ -78,6 +85,7 @@ public class DeviceUtils {
                 }
             }
             //SIM SN
+            assert telMgr != null;
             String simSN = telMgr.getSimSerialNumber();
             if (!isEmpty(simSN)) {
                 return "SIMSN:" + simSN;
@@ -150,19 +158,6 @@ public class DeviceUtils {
      */
     public static String getDeviceBrand() {
         return android.os.Build.BRAND;
-    }
-
-    /**
-     * 获取手机IMEI(需要“android.permission.READ_PHONE_STATE”权限)
-     *
-     * @return 手机IMEI
-     */
-    public static String getIMEI(Context ctx) {
-        TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Activity.TELEPHONY_SERVICE);
-        if (tm != null) {
-            return tm.getDeviceId();
-        }
-        return null;
     }
 
 

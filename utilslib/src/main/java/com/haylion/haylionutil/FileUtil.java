@@ -1,6 +1,6 @@
 package com.haylion.haylionutil;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,8 +10,6 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.Environment;
-import android.os.storage.StorageManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -26,8 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 
